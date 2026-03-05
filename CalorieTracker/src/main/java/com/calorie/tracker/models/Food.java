@@ -7,7 +7,7 @@
 package com.calorie.tracker.models;
 
 /**
- * Purpose: The responsibility of Food is t
+ * Purpose: The responsibility of Food is
  *
  * Food is-a object
  * Food is Data Transfer Object representing nutritional information for a specific object
@@ -16,15 +16,15 @@ public class Food
 {
 	//create our instance variables for our food class
 	private String name;
-	private double caloriesPer100G;
+	private double caloriesPer100g;
 	private double protein;
 	private double fat;
 	private double carbs;
 	
-	public Food(String name, double caloriesPer100G, double protein, double fat, double carbs)
+	public Food(String name, double caloriesPer100g, double protein, double fat, double carbs)
 	{
 		this.name = name;
-		this.caloriesPer100G = caloriesPer100G;
+		this.caloriesPer100g = caloriesPer100g;
 		this.protein = protein;
 		this.fat = fat;
 		this.carbs = carbs;
@@ -34,9 +34,9 @@ public class Food
 	{
 		return name;
 	}
-	public double getCaloriesPer100G()
+	public double getCaloriesPer100g()
 	{
-		return caloriesPer100G;
+		return caloriesPer100g;
 	}
 	public double getProtein()
 	{
@@ -50,14 +50,13 @@ public class Food
 	{
 		return carbs;
 	}
-	
 	public void setName(String name)
 	{
 		this.name = name;
 	}
-	public void setCaloriesPer100G(double caloriesPer100G)
+	public void setCaloriesPer100G(double caloriesPer100g)
 	{
-		this.caloriesPer100G = caloriesPer100G;
+		this.caloriesPer100g = caloriesPer100g;
 	}
 	public void setProtein(double protein)
 	{
@@ -70,16 +69,31 @@ public class Food
 	public void setCarbs(double carbs)
 	{
 		this.carbs = carbs;
-	}
-	
-	
-	
-	
-	
-	
-	public static void main(String[] args) 
-	{
-	
 		
 	}
+	
+	//calculates that macro's value by weight
+	private double calculateMacro(double valuePer100g, double weightEaten)
+	{
+		return (valuePer100g / 100.0) * weightEaten;
+	}
+	
+	//call our helper method for each macro
+	public double getCaloriesForWeight(double weight)
+	{
+		return calculateMacro(this.caloriesPer100g, weight);
+	}
+	public double getProteinForWeight(double weight)
+	{
+		return calculateMacro(this.protein, weight);
+	}
+	public double getFatForWeight(double weight)
+	{
+		return calculateMacro(this.fat, weight);
+	}
+	public double getCarbsForWeight(double weight)
+	{
+		return calculateMacro(this.carbs, weight);
+	}
+	
 }

@@ -1,20 +1,7 @@
 /**
 * Lead Author(s):
-* @author kevin; student ID
-* @author Full name; student ID
-* <<Add additional lead authors here>>
-*
-* Other Contributors:
-* Full name; student ID or contact information if not in class
-* <<Add additional contributors (mentors, tutors, friends) here, with contact information>>
-*
-* References:
-* Morelli, R., & Walde, R. (2016).
-* Java, Java, Java: Object-Oriented Problem Solving
-* https://open.umn.edu/opentextbooks/textbooks/java-java-java-object-oriented-problem-solving
-*
-* <<Add more references here>>
-*
+* @author Kevin Plascencia
+* 
 * Version: 2026-02-19
 */
 package com.calorie.tracker.services;
@@ -30,10 +17,7 @@ import org.json.JSONObject;
 
 import com.calorie.tracker.models.Food;
 /**
- * Purpose: The reponsibility of FoodService is ...
- *
- * FoodService is-a ...
- * FoodService is ...
+ * Purpose: The responsibility of FoodService is to make a connection to the open food facts api to retrieve our food's macros using a barcode while storing it as a Food object.
  */
 
 public class FoodService
@@ -62,18 +46,16 @@ public class FoodService
 					JSONObject fullData = new JSONObject(jsonResponse);
 					//get the "product" object
 					JSONObject product = fullData.getJSONObject("product");
-					//Get the "nutriments" object inside product
-					JSONObject nutriments = product.getJSONObject("nutriments");
+					//Get the "macros" object inside product
+					JSONObject macros = product.getJSONObject("nutriments");
 					//pull the specific data using opt double to avoid crashes on possible missing value
 					String name = product.optString("product_name", "Unknown Food");
-					double cals = nutriments.optDouble("energy-kcal_100g", 0.0);
-					double protein = nutriments.optDouble("proteins_100g", 0.0);
-					double fat = nutriments.optDouble("fat_100g", 0.0);
-					double carbs = nutriments.optDouble("carbohydrates_100g", 0.0);
+					double cals = macros.optDouble("energy-kcal_100g", 0.0);
+					double protein = macros.optDouble("proteins_100g", 0.0);
+					double fat = macros.optDouble("fat_100g", 0.0);
+					double carbs = macros.optDouble("carbohydrates_100g", 0.0);
 					//now we can use our constructor to create our food object
 					return new Food(name, cals, protein, fat, carbs);
-					
-					
 				}
 				else
 				{
